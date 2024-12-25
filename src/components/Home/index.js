@@ -14,7 +14,7 @@ const Home = ()=>{
                     }
                 }
         >
-            <img />
+            <img src="/assets/book.png" alt="book-img"/>
             <Typography variant="h4">
                 Dictionary
             </Typography>
