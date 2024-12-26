@@ -1,7 +1,14 @@
 import { Box, Typography, FilledInput, IconButton } from "@mui/material";
 import { Search as SearchIcon, Bookmark as BookmarkIcon, Gradient } from "@mui/icons-material";
+import { useState } from "react";
 
 const Home = ()=>{
+    const [word, setWord] = useState("");
+    const handleSubmit = (e)=>{
+       e.preventDefault();
+        console.log("submit..")
+        const trimmedWord = word.trim();
+    }
     return(
         <Box
                 sx={
@@ -31,6 +38,7 @@ const Home = ()=>{
             <Box
                 sx={{width: '360px'}}
             >
+            <form onSubmit={handleSubmit}>
             <FilledInput disableUnderline placeholder="Search word"
                 sx={{
                     my: 4,
@@ -43,7 +51,13 @@ const Home = ()=>{
                 }}
                 startAdornment={ <SearchIcon color="disabled" />}
                 fullWidth
-            /></Box>
+                value={word}
+                onChange={(e)=>{
+                    setWord(e.target.value)
+                }}
+            />
+            </form>
+            </Box>
             <IconButton 
                 sx={{
                     borderRadius: 2,
