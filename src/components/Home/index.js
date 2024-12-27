@@ -8,6 +8,7 @@ const Home = ()=>{
        e.preventDefault();
         console.log("submit..")
         const trimmedWord = word.trim();
+        console.log(trimmedWord )
     }
     return(
         <Box
