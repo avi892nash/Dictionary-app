@@ -1,14 +1,17 @@
 import { Box, Typography, FilledInput, IconButton } from "@mui/material";
 import { Search as SearchIcon, Bookmark as BookmarkIcon, Gradient } from "@mui/icons-material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = ()=>{
     const [word, setWord] = useState("");
+    const navigate = useNavigate()
     const handleSubmit = (e)=>{
        e.preventDefault();
         console.log("submit..")
         const trimmedWord = word.trim();
-        console.log(trimmedWord )
+        if(!trimmedWord || trimmedWord.split(' ').length > 1) return 
+        navigate(`/search/${word}`)
     }
     return(
         <Box
