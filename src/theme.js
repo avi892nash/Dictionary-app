@@ -13,6 +13,10 @@ export default createTheme({
         h4: {
             fontWeight: 800
         },
-        fontFamily:'Mulish'
+        fontFamily:'Mulish',
+        h6: {
+            fontWeight: 400
+        },
     }
+   
 })
