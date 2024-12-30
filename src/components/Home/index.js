@@ -33,6 +33,16 @@ const Home = ()=>{
                 mb:1
             }}
             
+            variant="h6">
+                Find word
+            </Typography>
+            <Typography 
+            color="primary"
+            sx={{
+                mt: 3,
+                mb:1
+            }}
+            
             variant="h4">
                 Dictionary
             </Typography>
