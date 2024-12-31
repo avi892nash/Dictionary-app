@@ -13,6 +13,7 @@ const Home = ()=>{
         if(!trimmedWord || trimmedWord.split(' ').length > 1) return 
         navigate(`/search/${word}`)
     }
+    console.log("welcominggg..... in new year 2025")
     return(
         <Box
                 sx={
