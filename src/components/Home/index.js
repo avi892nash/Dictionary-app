@@ -9,7 +9,7 @@ const Home = ()=>{
     const handleSubmit = (e)=>{
        e.preventDefault();
         console.log("submit..")
-        const trimmedWord = word.trim();
+        const trimmedWord = word.trim().toLowerCase();
         if(!trimmedWord || trimmedWord.split(' ').length > 1) return 
         navigate(`/search/${word}`)
     }
