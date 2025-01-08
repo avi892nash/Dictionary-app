@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, Grid2 } from '@mui/material';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Bookmarks from './components/Bookmarks';
@@ -11,6 +11,8 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Grid2 container>
+        <Grid2 item xs={12} sx={{p:2}}>
       <Router>
         <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -19,6 +21,8 @@ const App = () => {
         </Route>
         </Routes>
       </Router>
+      </Grid2>
+      </Grid2>
       <div></div>
     </ThemeProvider>
   )
