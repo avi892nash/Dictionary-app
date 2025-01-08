@@ -12,7 +12,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Grid2 container>
-        <Grid2 item xs={12} sx={{p:2}}>
+        <Grid2  xs={12} alignItems="center"  sx={{p : 2}}>
       <Router>
         <Routes>
         <Route path="/" element={<Home />}></Route>
