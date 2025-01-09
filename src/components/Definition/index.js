@@ -1,13 +1,26 @@
-import { Stack, Typography, Box, IconButton, Icon } from "@mui/material";
+import { Stack, Typography, Box, IconButton, Icon, Divider } from "@mui/material";
 import { ArrowBack as BackIcon, BookmarkBorder as BookmarkIcon, Border as BookmarkedIcon, PlayArrow as PlayIcon } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import theme from "../../theme";
 import { useNavigate } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import axios from "axios";
 
 
 const Definition = ()=>{
     const {word} = useParams();
     const navigate = useNavigate();
+    const [definition, setDefinition] = useState([]);
+
+    useEffect (()=>{
+        const  fetchDefinition = async () =>{
+            const response =   await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+            console.log(response.data);
+            setDefinition(response.data)
+        }
+        fetchDefinition();
+        
+    }, [])
     return(
         <div>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -40,7 +53,49 @@ const Definition = ()=>{
                 >
                     <PlayIcon></PlayIcon>
                 </IconButton>
+               
             </Stack>
+            {definition.map((def, index)=>(
+                    <Fragment key={index}>
+                        <Divider sx={{
+                             display: index === 0 ? "none" : "block",
+                             m : 3}}/>
+                           {def.meanings.map((meaning, meaningIndex)=>(
+                                <Box key={`${meaningIndex}`}
+                                sx={{
+                                    borderRadius: 2,
+                                    p: 2,
+                                    mt: 3,
+                                    boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.05)',
+                                    backgroundColor: '#fff'
+                                }}>
+                                    <Typography variant="subtitle1"
+                                                sx={{
+                                                    textTransform: "capitalize",
+                                                    color: "GrayText"
+                                                }}
+                                    > {meaning.partOfSpeech} </Typography>
+
+                                    <Typography variant= "body2"  color = "GrayText"
+                                                sx = {{
+                                                   py : 2
+                                                }}
+                                    >
+                                         {meaning.definitions.map((defi, idx)=>(
+                                        <Typography key={idx}>
+                                            {meaning.definitions.length > 1 && `${idx + 1}. `} {defi.definition}
+                                        </Typography>
+                                       ))}
+                                    </Typography>
+                                </Box>
+                        ))
+                        }
+                    </Fragment>
+            )
+                 )}   
+
+               
+
         </div>
     )
 }
