@@ -24,6 +24,15 @@ export default createTheme({
         subtitle1 :{
             fontWeight: 800
         },
-    }
+    },
    
+    mixins:{
+        alignInTheCenter:{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent:"center",
+            height:"100vh"
+        }
+    }
 })

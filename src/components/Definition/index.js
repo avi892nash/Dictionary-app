@@ -1,4 +1,4 @@
-import { Stack, Typography, Box, IconButton, Icon, Divider } from "@mui/material";
+import { Stack, Typography, Box, IconButton, Icon, Divider , CircularProgress as LoaderIcon} from "@mui/material";
 import { ArrowBack as BackIcon, BookmarkBorder as BookmarkIcon, Border as BookmarkedIcon, PlayArrow as PlayIcon } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import theme from "../../theme";
@@ -10,17 +10,22 @@ import axios from "axios";
 const Definition = ()=>{
     const {word} = useParams();
     const navigate = useNavigate();
+    const [loader, setLoader] = useState(true);
     const [definition, setDefinition] = useState([]);
 
     useEffect (()=>{
         const  fetchDefinition = async () =>{
             const response =   await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
             console.log(response.data);
-            setDefinition(response.data)
+            setDefinition(response.data);
+            setLoader(false);
         }
         fetchDefinition();
         
     }, [])
+    if(loader) return <Box sx={{...theme.mixins.alignInTheCenter}}>
+        <LoaderIcon></LoaderIcon>
+    </Box>
     return(
         <div>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
