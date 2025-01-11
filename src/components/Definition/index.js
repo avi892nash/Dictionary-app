@@ -1,5 +1,5 @@
-import { Stack, Typography, Box, IconButton, Icon, Divider , CircularProgress as LoaderIcon} from "@mui/material";
-import { ArrowBack as BackIcon, BookmarkBorder as BookmarkIcon, Border as BookmarkedIcon, PlayArrow as PlayIcon } from "@mui/icons-material";
+import { Stack, Typography, Box, IconButton, Icon, Divider , CircularProgress as LoaderIcon, Button} from "@mui/material";
+import { ArrowBack as BackIcon, BookmarkBorder as BookmarkIcon, Bookmark as BookmarkedIcon, PlayArrow as PlayIcon } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import theme from "../../theme";
 import { useNavigate } from "react-router-dom";
@@ -10,20 +10,44 @@ import axios from "axios";
 const Definition = ()=>{
     const {word} = useParams();
     const navigate = useNavigate();
-    const [loader, setLoader] = useState(true);
     const [definition, setDefinition] = useState([]);
+    const [wordExist, setWordExist] = useState(true); 
+    const [audio, setAudio] = useState(null);
 
     useEffect (()=>{
         const  fetchDefinition = async () =>{
+            try{
             const response =   await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-            console.log(response.data);
+            console.log("gello", response.data);
             setDefinition(response.data);
-            setLoader(false);
+            const phonetic = response.data[0].phonetics
+            console.log(phonetic, "https://api.dictionaryapi.dev/media/pronunciations/en/hello-au.mp3");
+            if(!phonetic.length) return;
+            const url = phonetic[0].audio;
+            console.log("1st audio", phonetic[0].audio)
+            console.log( setAudio(new Audio(url)));           
+            }
+            catch(error){
+                setWordExist(false);
+            }
         }
         fetchDefinition();
-        
     }, [])
-    if(loader) return <Box sx={{...theme.mixins.alignInTheCenter}}>
+
+    if(!wordExist) return <Box sx={{...theme.mixins.alignInTheCenter}}>
+        <Typography >
+            Word not Found
+        </Typography>
+        <Button sx={{textTransform : "capitalize", mt:2}} variant="contained"
+            onClick={()=>{
+                navigate("/")
+            }}
+        >
+            Go back
+        </Button>
+    </Box>
+
+    if(!definition.length) return <Box sx={{...theme.mixins.alignInTheCenter}}>
         <LoaderIcon></LoaderIcon>
     </Box>
     return(
@@ -56,7 +80,7 @@ const Definition = ()=>{
                        color: '#fff'
                     }}
                 >
-                    <PlayIcon></PlayIcon>
+                    <PlayIcon onClick={()=>audio.play()}></PlayIcon>
                 </IconButton>
                
             </Stack>

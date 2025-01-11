@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import { CssBaseline, Grid2 } from '@mui/material';
@@ -8,6 +8,15 @@ import Bookmarks from './components/Bookmarks';
 import Definition from './components/Definition';
 
 const App = () => {
+
+  const [bookmarks, setBookMarks] = useState({});
+  const addBookmark = (word, definition)=>{
+    // setBookMarks(old)
+  }
+  const removeBookmark = (word, definition)=>{
+
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
