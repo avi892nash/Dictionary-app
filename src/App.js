@@ -11,12 +11,19 @@ const App = () => {
 
   const [bookmarks, setBookMarks] = useState({});
   const addBookmark = (word, definition)=>{
-    // setBookMarks(old)
+   setBookMarks((oldBookmark) => {
+    oldBookmark[word] = definition;
+    return oldBookmark;
+   }
+  )
   }
-  const removeBookmark = (word, definition)=>{
-
+  const removeBookmark = (word)=>{
+    setBookMarks((oldBookmark)=>{
+      const newBookmarks = oldBookmark
+      delete newBookmarks[word];
+      return newBookmarks;
+    })
   }
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -26,7 +33,7 @@ const App = () => {
         <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/bookmarks" element={<Bookmarks />}></Route>
-        <Route path="/search/:word" element={<Definition />}>
+        <Route path="/search/:word" element={<Definition addBookmark={addBookmark} removeBookmark={removeBookmark} bookmarks={bookmarks} />}>
         </Route>
         </Routes>
       </Router>

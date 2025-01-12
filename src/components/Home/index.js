@@ -6,11 +6,9 @@ import { useNavigate } from "react-router-dom";
 const Home = ()=>{
     const [word, setWord] = useState("");
     const theme = useTheme();
-    console.log("theme..", theme);
     const navigate = useNavigate()
     const handleSubmit = (e)=>{
        e.preventDefault();
-        console.log("submit..")
         const trimmedWord = word.trim().toLowerCase();
         if(!trimmedWord || trimmedWord.split(' ').length > 1) return 
         navigate(`/search/${word}`)

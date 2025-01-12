@@ -1,5 +1,5 @@
 import { Stack, Typography, Box, IconButton, Icon, Divider , CircularProgress as LoaderIcon, Button} from "@mui/material";
-import { ArrowBack as BackIcon, BookmarkBorder as BookmarkIcon, Bookmark as BookmarkedIcon, PlayArrow as PlayIcon } from "@mui/icons-material";
+import { ArrowBack as BackIcon, Balance, BookmarkBorder as BookmarkIcon, Bookmark as BookmarkedIcon, PlayArrow as PlayIcon } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import theme from "../../theme";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +7,10 @@ import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 
 
-const Definition = ()=>{
+const Definition = ({addBookmark, removeBookmark, bookmarks})=>{
     const {word} = useParams();
+
+    const isBookmarked = useState(Object.keys(bookmarks).includes(word));
     const navigate = useNavigate();
     const [definition, setDefinition] = useState([]);
     const [wordExist, setWordExist] = useState(true); 
@@ -18,14 +20,12 @@ const Definition = ()=>{
         const  fetchDefinition = async () =>{
             try{
             const response =   await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-            console.log("gello", response.data);
+            console.log("complete data..", response.data);
             setDefinition(response.data);
             const phonetic = response.data[0].phonetics
-            console.log(phonetic, "https://api.dictionaryapi.dev/media/pronunciations/en/hello-au.mp3");
             if(!phonetic.length) return;
             const url = phonetic[0].audio;
-            console.log("1st audio", phonetic[0].audio)
-            console.log( setAudio(new Audio(url)));           
+            setAudio(new Audio(url));           
             }
             catch(error){
                 setWordExist(false);
@@ -54,11 +54,14 @@ const Definition = ()=>{
         <div>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
                 <IconButton onClick={()=>{navigate('/')}}>
-                    <BackIcon>
+                    <BackIcon sx={{color: "black"}}>
                     </BackIcon>
                 </IconButton>
-                <IconButton>
-                    <BookmarkIcon></BookmarkIcon>
+                <IconButton   >
+                        <div onClick={()=>
+                     isBookmarked ? removeBookmark(word) : addBookmark(word,definition) }>
+                    {isBookmarked ? <BookmarkedIcon sx={{color: "black"}}></BookmarkedIcon> :<BookmarkIcon sx={{color: "black"}}></BookmarkIcon>}
+                    </div>
                 </IconButton>
             </Stack>
             <Stack direction="row" justifyContent="space-between"
