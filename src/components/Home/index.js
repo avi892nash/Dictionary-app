@@ -1,7 +1,7 @@
 import { Box, Typography, FilledInput, IconButton, useTheme } from "@mui/material";
 import { Search as SearchIcon, Bookmark as BookmarkIcon, Gradient } from "@mui/icons-material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = ()=>{
     const [word, setWord] = useState("");
@@ -55,7 +55,7 @@ const Home = ()=>{
             />
             </form>
             </Box>
-            <IconButton 
+            <IconButton  LinkComponent={Link} to="/bookmarks"
                 sx={{
                     borderRadius: 2,
                     p: 2,
