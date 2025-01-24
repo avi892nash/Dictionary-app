@@ -9,7 +9,7 @@ import Definition from './components/Definition';
 
 const App = () => {
 
-  const [bookmarks, setBookMarks] = useState(JSON.parse(localStorage.getItem('bookmarks') || {}));
+  const [bookmarks, setBookMarks] = useState(JSON.parse(localStorage.getItem('bookmarks') || '{}'));
 
   useEffect(()=>{
     localStorage.setItem('bookmarks',  JSON.stringify (bookmarks))
