@@ -18,7 +18,7 @@ const Home = ()=>{
     
     return(
         <Box sx={{...theme.mixins.alignInTheCenter}}  >
-            <img src="/assets/book.png" alt="book-img"/>
+            <img src="./assets/book.png" alt="book-img"/>
             <Typography 
             color="primary"
             sx={{
